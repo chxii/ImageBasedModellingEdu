@@ -13,6 +13,7 @@
 #include <sstream>
 #include <set>
 #include <util/system.h>
+#include <cassert>
 #include <sfm/ransac_fundamental.h>
 #include "math/functions.h"
 #include "sfm/fundamental.h"
@@ -37,19 +38,10 @@ typedef math::Matrix<double, 3, 3> FundamentalMatrix;
 int  calc_ransac_iterations (double p,
                            int K,
                            double z = 0.99){
-
-    /** TODO HERE
-     * Coding here**/
-    return 0;
-
-
-    /** Reference
     double prob_all_good = math::fastpow(p, K);
     double num_iterations = std::log(1.0 - z)
                             / std::log(1.0 - prob_all_good);
     return static_cast<int>(math::round(num_iterations));
-     */
-
 }
 
 /**
@@ -169,20 +161,12 @@ std::vector<int> find_inliers(sfm::Correspondences2D2D const & matches
     const double squared_thresh = thresh* thresh;
 
     std::vector<int> inliers;
-
-    /**
-     * TODO HERE
-     *
-     * Coding here **/
-
-    /** Reference
     for(int i=0; i< matches.size(); i++){
         double error = calc_sampson_distance(F, matches[i]);
         if(error< squared_thresh){
             inliers.push_back(i);
         }
     }
-     **/
     return inliers;
 }
 
@@ -192,7 +176,7 @@ int main(int argc, char *argv[]){
 
     /** 加载归一化后的匹配对 */
     sfm::Correspondences2D2D corr_all;
-    std::ifstream in("./examples/task1/correspondences.txt");
+    std::ifstream in("../examples/task1/correspondences.txt");
     assert(in.is_open());
 
     std::string line, word;
